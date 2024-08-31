@@ -18,7 +18,10 @@ var config = builder.Configuration;
 
 builder.Services.AddValidatorsFromAssemblyContaining<Program>(ServiceLifetime.Singleton);
 
-builder.Services.AddDbContext<DataContext>(opts => { opts.UseSqlServer(config.GetConnectionString("db")); });
+var connectionString = builder.Configuration.GetConnectionString("db");
+
+builder.Services.AddDbContext<DataContext>(options =>
+    options.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 33))));
 
 builder.Services.AddHealthChecks()
     .AddDbContextCheck<DataContext>()
@@ -37,6 +40,17 @@ builder.Host.UseSerilog((_, loggerConfiguration) =>
 
 SelfLog.Enable(Console.Error);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        corsPolicyBuilder =>
+        {
+            corsPolicyBuilder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -44,6 +58,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowAllOrigins");
 
 app.UseHttpsRedirection();
 

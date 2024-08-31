@@ -1,4 +1,6 @@
-﻿using Domain.Entities;
+﻿using Domain.Dto;
+using Domain.Entities;
+using Domain.Exceptions;
 using Domain.Ports;
 
 namespace Domain.Services.Products;
@@ -6,9 +8,14 @@ namespace Domain.Services.Products;
 [DomainService]
 public class ProductSaveService(IProductRepository productRepository, IUnitOfWork unitOfWork)
 {
+    private async Task SaveChangesInUnitOfWorkAsync(CancellationToken cancellationToken)
+    {
+        await unitOfWork.SaveAsync(cancellationToken);
+    }
+
     public async Task<Product> SaveProductAsync(Product p, CancellationToken cancellationToken)
     {
-        ValidateProduct(p);
+        await ValidateProduct(p);
         var product = await SaveProductInRepositoryAsync(p);
         await SaveChangesInUnitOfWorkAsync(cancellationToken);
         return product;
@@ -19,13 +26,10 @@ public class ProductSaveService(IProductRepository productRepository, IUnitOfWor
         return await productRepository.SaveProductAsync(product);
     }
 
-    private async Task SaveChangesInUnitOfWorkAsync(CancellationToken cancellationToken)
-    {
-        await unitOfWork.SaveAsync(cancellationToken);
-    }
-
-    public static void ValidateProduct(Product p)
+    public async Task ValidateProduct(Product p)
     {
         if (p == null) throw new ArgumentNullException(nameof(p));
+        var existingProduct = await productRepository.GetProductsByFilterAsync(new ProductFilterDto(null, p.Name));
+        if (existingProduct.Any()) throw new ProductException("There is already a product with the same name");
     }
 }

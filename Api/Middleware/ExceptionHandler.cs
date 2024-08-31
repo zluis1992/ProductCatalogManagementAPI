@@ -1,39 +1,47 @@
 ﻿using Azure.Core;
 using Domain.Exceptions;
 using System.Net;
+using System.Text.Json;
 
 namespace Api.Middleware;
 
-public class AppExceptionHandlerMiddleware
-{
-    private readonly RequestDelegate _next;
-    private readonly ILogger<AppExceptionHandlerMiddleware> _logger;
 
-    public AppExceptionHandlerMiddleware(RequestDelegate next, ILogger<AppExceptionHandlerMiddleware> logger)
+public class AppExceptionHandlerMiddleware(RequestDelegate next, ILogger<AppExceptionHandlerMiddleware> logger)
+{
+    private static void CheckHttpContext(HttpContext context)
     {
-        _next = next;
-        _logger = logger;
+        if (context == null)
+        {
+            throw new ArgumentNullException(nameof(context));
+        }
     }
 
     public async Task InvokeAsync(HttpContext context)
     {
+        CheckHttpContext(context);
+
         try
         {
-            await _next.Invoke(context);
+            await next.Invoke(context);
         }
-        catch (Exception ex)
+        catch (Exception ex) when (ex is FileNotFoundException || ex is IOException || ex is CoreBusinessException)
         {
-            _logger.LogError(ex, ex.Message);
-            
-            var result = System.Text.Json.JsonSerializer.Serialize(new
-            {               
-                ErrorMessage = ex.Message
-            });
-
-            context.Response.ContentType = ContentType.ApplicationJson.ToString();
-            context.Response.StatusCode = 
-                (ex is CoreBusinessException) ? (int)HttpStatusCode.BadRequest : (int)HttpStatusCode.InternalServerError; 
-            await context.Response.WriteAsync(result);
+            await LogAndHandleExceptionAsync(context, ex);
         }
+    }
+
+    private async Task LogAndHandleExceptionAsync(HttpContext context, Exception ex)
+    {
+        logger.LogWarning(Resources.errorLog, "{ErrorMessage}", ex.Message);
+
+        var result = JsonSerializer.Serialize(new
+        {
+            ErrorMessage = ex.Message
+        });
+
+        context.Response.ContentType = ContentType.ApplicationJson.ToString();
+        context.Response.StatusCode =
+            ex is CoreBusinessException ? (int)HttpStatusCode.BadRequest : (int)HttpStatusCode.InternalServerError;
+        await context.Response.WriteAsync(result);
     }
 }
