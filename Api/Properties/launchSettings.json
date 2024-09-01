@@ -22,7 +22,8 @@
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
-      "publishAllPorts": true
+      "publishAllPorts": true,
+      "applicationUrl": "http://0.0.0.0:80"
     }
   },
   "$schema": "https://json.schemastore.org/launchsettings.json",
