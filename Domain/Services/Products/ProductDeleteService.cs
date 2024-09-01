@@ -14,15 +14,16 @@ public class ProductDeleteService(IProductRepository productRepository, IUnitOfW
         var existingProduct = await _productRepository.GetSingleProductByIdAsync(productId);
         if (existingProduct == null) return false;
 
-        await DeleteProductFromRepositoryAsync(existingProduct);
+        existingProduct.Active = false;
+        await DeleteSoftProductFromRepositoryAsync(existingProduct);
         await SaveChangesInUnitOfWorkAsync(cancellationToken);
 
         return true;
     }
 
-    private async Task DeleteProductFromRepositoryAsync(Product product)
+    private async Task DeleteSoftProductFromRepositoryAsync(Product product)
     {
-        await _productRepository.DeleteProductAsync(product);
+        await _productRepository.UpdateProductAsync(product);
     }
 
     private async Task SaveChangesInUnitOfWorkAsync(CancellationToken cancellationToken)

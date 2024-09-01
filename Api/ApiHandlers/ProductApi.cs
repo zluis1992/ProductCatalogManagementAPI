@@ -16,9 +16,11 @@ public static class ProductApi
         routeHandler.MapGet("/{id}",
                 async (IMediator mediator, Guid id) =>
                 {
-                    return Results.Ok(await mediator.Send(new ProductQuery(id)));
+                    var product = await mediator.Send(new ProductQuery(id));
+                    return product is null ? Results.NotFound() : Results.Ok(product);
                 })
-            .Produces(StatusCodes.Status200OK, typeof(ProductDto));
+            .Produces(StatusCodes.Status200OK, typeof(ProductDto))
+            .Produces(StatusCodes.Status404NotFound);
 
         //Save
         routeHandler.MapPost("/", async (IMediator mediator, [Validate] ProductSaveCommand command) =>

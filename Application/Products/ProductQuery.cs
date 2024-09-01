@@ -5,4 +5,4 @@ namespace Application.Products;
 
 public record ProductQuery(
     Guid Id
-    ) : IRequest<ProductDto>;
+    ) : IRequest<ProductDto?>;

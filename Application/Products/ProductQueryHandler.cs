@@ -4,11 +4,11 @@ using MediatR;
 
 namespace Application.Products;
 
-public class ProductQueryHandler(IProductRepository repository) : IRequestHandler<ProductQuery, ProductDto>
+public class ProductQueryHandler(IProductRepository repository) : IRequestHandler<ProductQuery, ProductDto?>
 {
-    public async Task<ProductDto> Handle(ProductQuery request, CancellationToken cancellationToken)
+    public async Task<ProductDto?> Handle(ProductQuery request, CancellationToken cancellationToken)
     {
         var product = await repository.GetSingleProductByIdAsync(request.Id);
-        return new ProductDto(product!.Id, product.Name, product.Description, product.Price);
+        return product is null ? null : new ProductDto(product!.Id, product.Name, product.Description, product.Price);
     }
 }

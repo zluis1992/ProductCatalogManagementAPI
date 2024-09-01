@@ -16,6 +16,6 @@ public class ProductQueryFilterHandler(IProductRepository repository) : IRequest
         );
 
         var products = await repository.GetProductsByFilterAsync(filter);
-        return products.Select(p => new ProductDto(p.Id, p.Name, p.Description, p.Price));
+        return products.Where(x => x.Active).Select(p => new ProductDto(p.Id, p.Name, p.Description, p.Price));
     }
 }
