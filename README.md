@@ -1,6 +1,6 @@
 Este proyecto se construyo con el framework net8 con una arquitectura de tipo Domain Centric (Hex, Clean, Onion).
 
-Las responsabilidades de este proyecto son únicamente las de un CRUD de productos que pueden son publicados a través de un API RESTful y la documentación de los endpoints puede ser consultada en:
+Las responsabilidades de este proyecto son únicamente las de un CRUD de productos son publicados a través de un API RESTful, la documentación de los endpoints puede ser consultada en:
 
 https://documenter.getpostman.com/view/22749219/2sAXjM3rLq
 
