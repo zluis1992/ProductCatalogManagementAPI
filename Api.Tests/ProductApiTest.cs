@@ -58,7 +58,7 @@ public class ProductApiTest
         {
             await using var webApp = new ApiApp();
 
-            ProductSaveCommand productCommand = new("Product 3", "Description 3", -50.00m);
+            ProductSaveCommand productCommand = new(null, "Product 3", "Description 3", -50.00m);
             var client = webApp.CreateClient();
             request = await client.PostAsJsonAsync("/api/product/", productCommand);
 
@@ -78,7 +78,7 @@ public class ProductApiTest
     {
         await using var webApp = new ApiApp();
 
-        ProductSaveCommand productCommand = new("Product 2", "Description 2", 150.00m);
+        ProductSaveCommand productCommand = new(null, "Product 2", "Description 2", 150.00m);
         var client = webApp.CreateClient();
         var request = await client.PostAsJsonAsync("/api/product/", productCommand);
 

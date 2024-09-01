@@ -4,5 +4,5 @@ using MediatR;
 namespace Application.Products;
 
 public record ProductSaveCommand(
-    string Name, string? Description, decimal Price
+    Guid? Id, string Name, string? Description, decimal Price
 ) : IRequest<ProductDto>;
