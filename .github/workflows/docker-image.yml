@@ -38,7 +38,7 @@ jobs:
       run: |
         dotnet tool install --global dotnet-ef
         dotnet tool restore
-        dotnet ef database update -c DataContext -p Infrastructure/Infrastructure.csproj
+        dotnet ef database update -c DataContext -p Infrastructure/Infrastructure.csproj -s Api/Api.csproj
       env:
         ASPNETCORE_ENVIRONMENT: Production
     
