@@ -1,7 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Domain.Dto;
 using Domain.Entities;
-using Domain.Enums;
 using Domain.Ports;
 using Infrastructure.Ports;
 using LinqKit;
@@ -17,9 +16,8 @@ public class ProductRepository(IRepository<Product> dataSource) : IProductReposi
     public Task<IEnumerable<Product>> GetProductsByFilterAsync(ProductFilterDto f)
     {
         var filter = BuildFilter(f);
-        var orderBy = BuildOrderBy(f);
 
-        return _dataSource.GetManyAsync(filter, orderBy);
+        return _dataSource.GetManyAsync(filter);
     }
 
     public async Task<Product?> GetSingleProductByIdAsync(Guid id)
@@ -55,23 +53,5 @@ public class ProductRepository(IRepository<Product> dataSource) : IProductReposi
         if (f.MaxPrice.HasValue) filter = filter.And(p => p.Price <= f.MaxPrice.Value);
 
         return filter;
-    }
-
-    private static Func<IQueryable<Product>, IOrderedQueryable<Product>>? BuildOrderBy(ProductFilterDto f)
-    {
-        if (f.OrderBy == ProductOrderEnum.None) return null;
-
-        return f.OrderBy switch
-        {
-            ProductOrderEnum.Name => f.IsDescending
-                ? q => q.OrderByDescending(p => p.Name)
-                : q => q.OrderBy(p => p.Name),
-
-            ProductOrderEnum.Price => f.IsDescending
-                ? q => q.OrderByDescending(p => p.Price)
-                : q => q.OrderBy(p => p.Price),
-
-            _ => null
-        };
     }
 }

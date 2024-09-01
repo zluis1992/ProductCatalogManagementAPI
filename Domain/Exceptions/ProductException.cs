@@ -17,6 +17,7 @@ public sealed class ProductException : CoreBusinessException
     {
     }
 
+    [Obsolete("Obsolete")]
     private ProductException(SerializationInfo info, StreamingContext context)
         : base(info, context)
     {

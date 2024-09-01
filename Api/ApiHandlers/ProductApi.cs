@@ -2,7 +2,6 @@
 using Api.Validators;
 using Application.Products;
 using Domain.Dto;
-using Domain.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,12 +35,9 @@ public static class ProductApi
                 [FromQuery] string? name,
                 [FromQuery] decimal? minPrice,
                 [FromQuery] decimal? maxPrice,
-                [FromQuery] ProductOrderEnum? orderBy,
-                [FromQuery] bool? isDescending,
                 [FromServices] ProductQueryFilterValidator validator) =>
             {
-                var productQueryFilter = new ProductQueryFilter(id, name, minPrice, maxPrice,
-                    orderBy ?? ProductOrderEnum.None, isDescending);
+                var productQueryFilter = new ProductQueryFilter(id, name, minPrice, maxPrice);
 
                 var validationResult = await validator.ValidateAsync(productQueryFilter);
 
