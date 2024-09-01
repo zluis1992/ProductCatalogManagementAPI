@@ -1,6 +1,10 @@
 Este proyecto se construyo con el framework net8 con una arquitectura de tipo Domain Centric (Hex, Clean, Onion).
 
-Los principales patrones y estilos de arquitectura que guían este bloque son
+Las responsabilidades de este proyecto son únicamente las de un CRUD de productos que pueden son publicados a través de un API RESTful y la documentación de los endpoints puede ser consultada en:
+
+https://documenter.getpostman.com/view/22749219/2sAXjM3rLq
+
+Los principales patrones y estilos de arquitectura que guían este proyecto son
 
 ## Arquitectura de Puertos y Adaptadores
 
@@ -63,5 +67,7 @@ Solucion para VisualStudio(.sln) compuesta de los siguientes carpetas :
 
 La solución utiliza:
 
-- Github action para despliegue automatico en app service de Azure,
-- Gitversion como herramienta para manejo versionamiento automatico y generacion changelog basada en la información semantica de la version (SemVer) obtenida de los commits
+- Github action para despliegue automatico en app service de Azure
+- Docker, la aplicacion se encuentra dockerizada para que pueda ser desplegada facilmente
+- Gitversion como herramienta para manejo versionamiento automatico
+- Conventional-changelog como herramienta para la generacion changelog basada en la información semantica de la version (SemVer) obtenida de los commits
