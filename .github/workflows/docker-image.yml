@@ -1,4 +1,4 @@
-name: Build and Deploy Docker Image
+name: Build, Version, and Deploy Docker Image
 
 on:
   push:
@@ -24,15 +24,42 @@ jobs:
         dotnet-version: '8.0'
 
     - name: Install GitVersion
-      run: |
-        dotnet tool install --global GitVersion.Tool
+      uses: gittools/actions/gitversion/setup@v0.9.14
+      with:
+        versionSpec: '5.x'
 
-    - name: Check GitVersion Version
-      run: dotnet-gitversion /version
-
-    - name: Run GitVersion
+    - name: Determine Version
       id: gitversion
-      run: dotnet-gitversion /output json /showvariable SemVer
+      run: dotnet-gitversion /output json > gitversion.json
+
+    - name: Read Version
+      id: read_version
+      run: echo "VERSION=$(jq -r .SemVer < gitversion.json)" >> $GITHUB_ENV
+
+    - name: Install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.x'
+
+    - name: Install `conventional-changelog`
+      run: npm install -g conventional-changelog-cli
+
+    - name: Generate Changelog
+      run: conventional-changelog -p angular -i CHANGELOG.md -s -r 0
+
+    - name: Update Changelog with Version
+      run: |
+        VERSION=${{ env.VERSION }}
+        if ! grep -q "## [${VERSION}]" CHANGELOG.md; then
+          sed -i "1i## [${VERSION}] - $(date +'%Y-%m-%d')" CHANGELOG.md
+        fi
+        git config --global user.email "zluissiloxx@hotmail.com"
+        git config --global user.name "GitHub Actions"
+        git add CHANGELOG.md
+        git commit -m "chore(release): update changelog with version $VERSION"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
@@ -46,6 +73,9 @@ jobs:
 
     - name: Build and push Docker images
       run: |
+        docker build -t productcatalogmanagerapicontainerregistry.azurecr.io/productcatalogmanagerapi:${{ env.VERSION }} -f Api/Dockerfile .
+        docker push productcatalogmanagerapicontainerregistry.azurecr.io/productcatalogmanagerapi:${{ env.VERSION }}
+
         docker build -t productcatalogmanagerapicontainerregistry.azurecr.io/productcatalogmanagerapi:latest -f Api/Dockerfile .
         docker push productcatalogmanagerapicontainerregistry.azurecr.io/productcatalogmanagerapi:latest
 

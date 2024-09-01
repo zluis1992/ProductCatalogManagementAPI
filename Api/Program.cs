@@ -51,7 +51,10 @@ builder.Services.AddCors(options =>
         });
 });
 
-builder.WebHost.UseUrls("http://0.0.0.0:80");
+if (!builder.Environment.IsDevelopment())
+{
+    builder.WebHost.UseUrls("http://0.0.0.0:80");
+}
 
 var app = builder.Build();
 
