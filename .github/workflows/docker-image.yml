@@ -39,4 +39,4 @@ jobs:
         docker run --rm \
           -e MYSQL_CONNECTION_STRING=${{ secrets.MYSQL_CONNECTION_STRING }} \
           productcatalogmanagerapicontainerregistry.azurecr.io/productcatalogmanagerapi:latest \
-          dotnet ef database update --project Infrastructure/Infrastructure.csproj --context ApplicationDbContext
+          sh -c "dotnet ef database update --project Infrastructure/Infrastructure.csproj --context ApplicationDbContext"
