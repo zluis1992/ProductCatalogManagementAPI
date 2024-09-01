@@ -28,7 +28,7 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        docker build -t productcatalogmanagerapicontainerregistry.azurecr.io/productcatalogmanagerapi:latest ./Api
+        docker build -t productcatalogmanagerapicontainerregistry.azurecr.io/productcatalogmanagerapi:latest -f Api/Dockerfile .
         docker push productcatalogmanagerapicontainerregistry.azurecr.io/productcatalogmanagerapi:latest
 
     - name: Log out from Azure Container Registry
