@@ -1,4 +1,4 @@
-name: Build, Version, and Deploy Docker Image
+name: Build, Version, Deploy, and Release
 
 on:
   push:
@@ -93,3 +93,15 @@ jobs:
         dotnet ef database update -c DataContext -p Infrastructure/Infrastructure.csproj -s Api/Api.csproj
       env:
         ASPNETCORE_ENVIRONMENT: Production
+
+    - name: Create GitHub Release
+      id: create_release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ env.VERSION }}
+        name: Release ${{ env.VERSION }}
+        body: |
+          ## Changes in this release:
+          $(cat CHANGELOG.md)
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
