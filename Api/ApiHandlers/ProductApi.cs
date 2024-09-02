@@ -35,9 +35,10 @@ public static class ProductApi
                 [FromQuery] string? name,
                 [FromQuery] decimal? minPrice,
                 [FromQuery] decimal? maxPrice,
+                [FromQuery] bool? includeDeleted,
                 [FromServices] ProductQueryFilterValidator validator) =>
             {
-                var productQueryFilter = new ProductQueryFilter(id, name, minPrice, maxPrice);
+                var productQueryFilter = new ProductQueryFilter(id, name, minPrice, maxPrice, includeDeleted);
 
                 var validationResult = await validator.ValidateAsync(productQueryFilter);
 
