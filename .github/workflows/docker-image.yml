@@ -96,12 +96,9 @@ jobs:
 
     - name: Create GitHub Release
       id: create_release
-      uses: softprops/action-gh-release@v1
-      with:
-        tag_name: ${{ env.VERSION }}
-        name: Release ${{ env.VERSION }}
-        body: |
-          ## Changes in this release:
-          $(cat CHANGELOG.md)
+      run: |
+        VERSION=${{ env.VERSION }}
+        CHANGELOG_CONTENT=$(cat CHANGELOG.md)
+        gh release create "${VERSION}" --title "Release ${VERSION}" --notes "${CHANGELOG_CONTENT}"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
