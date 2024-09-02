@@ -1,5 +1,14 @@
-## [0.1.0] - 2024-09-02
+## [0.1.1] - 2024-09-02
 #  (2024-09-02)
+
+
+### Bug Fixes
+
+* Ajustes menores en notas de releases ([7ab41bb](https://github.com/zluis1992/ProductCatalogManagementAPI/commit/7ab41bb988abeb646cbe713a8543fdb808df8cc2))
+
+
+
+# [0.1.0](https://github.com/zluis1992/ProductCatalogManagementAPI/compare/11b353326ee3af16216b26d65ec27a9473164a7b...0.1.0) (2024-09-02)
 
 
 ### Features
