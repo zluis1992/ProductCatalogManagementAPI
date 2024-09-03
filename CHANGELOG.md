@@ -1,5 +1,14 @@
-## [0.1.4] - 2024-09-03
+## [0.1.5] - 2024-09-03
 #  (2024-09-03)
+
+
+### Bug Fixes
+
+* Ajuste menor para no tener en cuenta productos eliminados en las validaciones ([260b71e](https://github.com/zluis1992/ProductCatalogManagementAPI/commit/260b71e732515674160db8a869cf7725232fecda))
+
+
+
+## [0.1.4](https://github.com/zluis1992/ProductCatalogManagementAPI/compare/0.1.3...0.1.4) (2024-09-03)
 
 
 ### Features
