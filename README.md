@@ -4,7 +4,11 @@ Las responsabilidades de este proyecto son únicamente las de un CRUD de product
 
 https://documenter.getpostman.com/view/22749219/2sAXjM3rLq
 
-Los principales patrones y estilos de arquitectura que guían este proyecto son
+## Pasos previos para iniciar el proyecto
+
+El unico paso que requiere este microservicio es el de crear una BD en MySQL y configurar los datos en el archivo appsettings.Development.json, ya con esto es necesario ejecutar el comando Update-Database desde la ventana de Package Manager Console seleccionando el proyecto de Infrastructure, con esto se ejecutaran las migraciones y se crearan las tablas en la BD.
+
+Los principales patrones y estilos de arquitectura que guían este proyecto son:
 
 ## Arquitectura de Puertos y Adaptadores
 

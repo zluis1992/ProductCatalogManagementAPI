@@ -14,18 +14,18 @@ public class ProductQueryFilterValidator : AbstractValidator<ProductQueryFilter>
 
         RuleFor(x => x.MinPrice)
             .Must(value => value is null or >= 0)
-            .WithMessage("MinPrice must be a non-negative number.");
+            .WithMessage("MinPrice no puede ser negativo.");
 
         RuleFor(x => x.MaxPrice)
             .Must(value => value is null or >= 0)
-            .WithMessage("MaxPrice must be a non-negative number.");
+            .WithMessage("MaxPrice no puede ser negativo.");
 
         RuleFor(x => x)
             .Must(x => !x.MinPrice.HasValue || !x.MaxPrice.HasValue || x.MaxPrice >= x.MinPrice)
-            .WithMessage("MaxPrice must be greater than or equal to MinPrice.");
+            .WithMessage("MaxPrice debe ser mayor o igual a MinPrice.");
 
         RuleFor(x => x)
             .Must(x => !x.MinPrice.HasValue || !x.MaxPrice.HasValue || x.MinPrice <= x.MaxPrice)
-            .WithMessage("MinPrice must be less than or equal to MaxPrice.");
+            .WithMessage("MinPrice debe ser menor o igual a MaxPrice.");
     }
 }

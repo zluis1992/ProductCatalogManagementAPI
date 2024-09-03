@@ -30,6 +30,6 @@ public class ProductSaveService(IProductRepository productRepository, IUnitOfWor
     {
         if (p == null) throw new ArgumentNullException(nameof(p));
         var existingProduct = await productRepository.GetProductsByFilterAsync(new ProductFilterDto(null, p.Name));
-        if (existingProduct.Any()) throw new ProductException("There is already a product with the same name");
+        if (existingProduct.Any()) throw new ProductException("Ya existe un producto con el mismo nombre");
     }
 }

@@ -53,7 +53,7 @@ public static class ProductApi
         routeHandler.MapPut("/{id}", async (IMediator mediator, Guid id, [Validate] ProductUpdateCommand command) =>
             {
                 if (id != command.Id)
-                    return Results.BadRequest("The product ID in the path does not match the ID in the body.");
+                    return Results.BadRequest("EL product ID no es igual que el product ID enviado en el body de la petición.");
 
                 var result = await mediator.Send(command);
                 return result ? Results.NoContent() : Results.NotFound();
