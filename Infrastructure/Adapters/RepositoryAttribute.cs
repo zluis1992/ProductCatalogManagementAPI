@@ -1,7 +1,6 @@
-﻿namespace Infrastructure.Adapters
+﻿namespace Infrastructure.Adapters;
+
+[AttributeUsage(AttributeTargets.Class)]
+public sealed class RepositoryAttribute : Attribute
 {
-    [AttributeUsage(AttributeTargets.Class)]
-    public sealed class RepositoryAttribute : Attribute
-    {
-    }
 }
