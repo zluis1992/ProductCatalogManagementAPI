@@ -1,5 +1,14 @@
-## [0.1.1] - 2024-09-02
+## [0.1.2] - 2024-09-02
 #  (2024-09-02)
+
+
+### Features
+
+* Ajuste funcionalidad obtener productos ([36c329b](https://github.com/zluis1992/ProductCatalogManagementAPI/commit/36c329bf5eec9ac8019c2363aa13bff851fa1e26))
+
+
+
+## [0.1.1](https://github.com/zluis1992/ProductCatalogManagementAPI/compare/0.1.0...0.1.1) (2024-09-02)
 
 
 ### Bug Fixes
