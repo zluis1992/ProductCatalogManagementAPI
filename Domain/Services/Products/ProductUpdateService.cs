@@ -1,5 +1,6 @@
 ﻿using Domain.Dto;
 using Domain.Entities;
+using Domain.Exceptions;
 using Domain.Ports;
 
 namespace Domain.Services.Products;
@@ -14,7 +15,7 @@ public class ProductUpdateService(IProductRepository productRepository, IUnitOfW
 
     public async Task<bool> UpdateProductAsync(ProductDto updatedProduct, CancellationToken cancellationToken)
     {
-        ValidateProduct(updatedProduct);
+        await ValidateProduct(updatedProduct);
 
         var existingProduct = await productRepository.GetSingleProductByIdAsync(updatedProduct.Id);
         if (existingProduct == null) return false;
@@ -34,8 +35,10 @@ public class ProductUpdateService(IProductRepository productRepository, IUnitOfW
         await productRepository.UpdateProductAsync(product);
     }
 
-    public static void ValidateProduct(ProductDto p)
+    public async Task ValidateProduct(ProductDto p)
     {
         if (p == null) throw new ArgumentNullException(nameof(p));
+        var existingProduct = await productRepository.GetProductsByFilterAsync(new ProductFilterDto(null, p.Name));
+        if (existingProduct.Any()) throw new ProductException("Ya existe un producto con el mismo nombre");
     }
 }
