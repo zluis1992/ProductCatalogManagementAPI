@@ -1,5 +1,14 @@
-## [0.1.2] - 2024-09-02
-#  (2024-09-02)
+## [0.1.3] - 2024-09-03
+#  (2024-09-03)
+
+
+### Features
+
+* ajustes validaciones al actualizar producto, cambio de mensajes de validación a español y actualizacion de la documentación del proyecto ([77d41bb](https://github.com/zluis1992/ProductCatalogManagementAPI/commit/77d41bb88390c4c86075e1d2dee9a937ee4695fb))
+
+
+
+## [0.1.2](https://github.com/zluis1992/ProductCatalogManagementAPI/compare/0.1.1...0.1.2) (2024-09-02)
 
 
 ### Features
