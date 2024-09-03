@@ -1,5 +1,9 @@
-## [0.1.5] - 2024-09-03
+## [0.1.6] - 2024-09-03
 #  (2024-09-03)
+
+
+
+## [0.1.5](https://github.com/zluis1992/ProductCatalogManagementAPI/compare/0.1.4...0.1.5) (2024-09-03)
 
 
 ### Bug Fixes
