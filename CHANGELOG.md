@@ -1,5 +1,14 @@
-## [0.1.3] - 2024-09-03
+## [0.1.4] - 2024-09-03
 #  (2024-09-03)
+
+
+### Features
+
+* Nueva validación para validar productos duplicados por nombre al momento de actualizar ([430156b](https://github.com/zluis1992/ProductCatalogManagementAPI/commit/430156bc0714ab32918b759f3051708e36ebfc92))
+
+
+
+## [0.1.3](https://github.com/zluis1992/ProductCatalogManagementAPI/compare/0.1.2...0.1.3) (2024-09-03)
 
 
 ### Features
